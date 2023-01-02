@@ -65,7 +65,7 @@ class ScheduledCall(object):
             
             self._reschedule()
             return self.deferred
-        except Exception, e:
+        except Exception as e:
             log.error('Exception while starting %r: %s' % (self, str(e),))
             self.running = False
             self.deferred = None
@@ -119,9 +119,9 @@ class ScheduledCall(object):
 
     def __repr__(self):
         if hasattr(self.f, 'func_name'):
-            func = self.f.func_name
+            func = self.f.__name__
             if hasattr(self.f, 'im_class'):
-                func = self.f.im_class.__name__ + '.' + func
+                func = self.f.__self__.__class__.__name__ + '.' + func
         else:
             func = reflect.safe_repr(self.f)
 

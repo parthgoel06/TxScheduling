@@ -15,38 +15,38 @@ class StarTestCase(TestCase):
     def testNextMinute(self):
         """ Next runtime is next minute """
         for i in range(0,59):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 01, 01,
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o1, 0o1,
                                                                  00, i, 00,
                                                                  00)),
-                             datetime(2008,01,01,00,i+1,00,00))
+                             datetime(2008,0o1,0o1,00,i+1,00,00))
     
     def testNextHour(self):
         """ Next runtime is next hour """
         for i in range(0,23):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 01, 01, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o1, 0o1, 
                                                                  i, 59, 00,
                                                                  00)),
-                             datetime(2008,01,01,i+1,00,00,00))
+                             datetime(2008,0o1,0o1,i+1,00,00,00))
     
     def testNextDay(self):
         """ Next runtime is next day """
         for i in range(1,31):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 01, i, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o1, i, 
                                                                  23, 59, 00, 
                                                                  00)),
-                             datetime(2008,01,i+1,00,00,00,00))
+                             datetime(2008,0o1,i+1,00,00,00,00))
     
     def testNextMonth(self):
         """ Next runtime is next month """
-        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 01, 31, 23,
+        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o1, 31, 23,
                                                               59, 00, 00)),
-                         datetime(2008,02,01,00,00,00,00))
+                         datetime(2008,0o2,0o1,00,00,00,00))
     
     def testNextYear(self):
         """ Next runtime is next year """
         self.assertEqual(self.schedule.getNextEntry(datetime(2008, 12, 31, 23, 
                                                              59, 00, 00)),
-                         datetime(2009,01,01,00,00,00,00))
+                         datetime(2009,0o1,0o1,00,00,00,00))
 
 class RangeTestCase(TestCase):
     def setUp(self):
@@ -56,96 +56,96 @@ class RangeTestCase(TestCase):
         """ Test range get next minute """
         # Test minutes that should end up in the current hour at 15 minutes
         for i in range(0,14):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, 05, 
-                                                                 03, i, 00, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, 0o5, 
+                                                                 0o3, i, 00, 
                                                                  00)),
-                             datetime(2008,05,05,03,15,00,00))
+                             datetime(2008,0o5,0o5,0o3,15,00,00))
     
         # Test minutes that should end up in the current hour at i+1 minutes
         for i in range(14,20):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, 05, 
-                                                                 03, i, 00, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, 0o5, 
+                                                                 0o3, i, 00, 
                                                                  00)),
-                             datetime(2008,05,05,03,i+1,00,00))
+                             datetime(2008,0o5,0o5,0o3,i+1,00,00))
     
         # Test minutes that should end up at hour+1 and 15 minutes
         for i in range(20,60):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, 05, 
-                                                                 03, i, 00, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, 0o5, 
+                                                                 0o3, i, 00, 
                                                                  00)),
-                             datetime(2008,05,05,04,15,00,00))
+                             datetime(2008,0o5,0o5,0o4,15,00,00))
     
     def testNextHour(self):
         """ Test range get next hour """ 
         for i in range(0,3):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, 05, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, 0o5, 
                                                                  i, 59, 00, 
                                                                  00)),
-                             datetime(2008,05,05,3,15,00,00))
+                             datetime(2008,0o5,0o5,3,15,00,00))
     
         for i in range(3,6):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, 05, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, 0o5, 
                                                                  i, 59, 00, 
                                                                  00)),
-                             datetime(2008,05,05,i+1,15,00,00))
+                             datetime(2008,0o5,0o5,i+1,15,00,00))
     
         for i in range(6,24):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, 05, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, 0o5, 
                                                                  i, 59, 00, 
                                                                  00)),
-                             datetime(2008,05,06,03,15,00,00))
+                             datetime(2008,0o5,0o6,0o3,15,00,00))
     
     def testNextDay(self):
         """ Test range get next day """
         for i in range(1,5):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, i, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, i, 
                                                                  23, 59, 00, 
                                                                  00)),
-                             datetime(2008,05,5,3,15,00,00))
+                             datetime(2008,0o5,5,3,15,00,00))
     
         for i in range(5,10):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, i, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, i, 
                                                                  23, 59, 00, 
                                                                  00)),
-                             datetime(2008,05,i+1,3,15,00,00))
+                             datetime(2008,0o5,i+1,3,15,00,00))
     
         for i in range(10,13):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, i, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, i, 
                                                                  23, 59, 00, 
                                                                  00)),
-                             datetime(2008,05,13,3,15,00,00))
+                             datetime(2008,0o5,13,3,15,00,00))
     
-        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, 13, 23, 
+        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, 13, 23, 
                                                              59, 00, 00)),
-                         datetime(2008,05,14,3,15,00,00))
+                         datetime(2008,0o5,14,3,15,00,00))
     
         for i in range(14,20):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, i, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, i, 
                                                                  23, 59, 00, 
                                                                  00)),
-                             datetime(2008,05,20,3,15,00,00))
+                             datetime(2008,0o5,20,3,15,00,00))
     
-        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, 20, 23, 
+        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, 20, 23, 
                                                              59, 00, 00)),
-                         datetime(2008,05,21,3,15,00,00))
+                         datetime(2008,0o5,21,3,15,00,00))
     
     def testNextMonth(self):
         """ Test range get next month """
-        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 01, 01, 00, 
+        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o1, 0o1, 00, 
                                                              00, 00, 00)),
-                         datetime(2008,05,05,03,15,00,00))
+                         datetime(2008,0o5,0o5,0o3,15,00,00))
   
-        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 05, 31, 23, 
+        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o5, 31, 23, 
                                                              59, 00, 00)),
-                         datetime(2008,06,03,03,15,00,00))
+                         datetime(2008,0o6,0o3,0o3,15,00,00))
     
-        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 07, 30, 23, 
+        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o7, 30, 23, 
                                                              59, 00, 00)),
-                         datetime(2008,8,05,03,15,00,00))
+                         datetime(2008,8,0o5,0o3,15,00,00))
     
         self.assertEqual(self.schedule.getNextEntry(datetime(2008, 8, 31, 23, 
                                                              59, 00, 00)),
-                         datetime(2009,05,05,03,15,00,00))
+                         datetime(2009,0o5,0o5,0o3,15,00,00))
 
 class AllDOWTestCase(TestCase):
     def setUp(self):
@@ -154,16 +154,16 @@ class AllDOWTestCase(TestCase):
     def testNextDay(self):
         """ Test all days of the week get next day """
         for i in range(1,30):
-            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 01, i, 
+            self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o1, i, 
                                                                  23, 59, 00, 
                                                                  00)),
-                             datetime(2008,01,(i/5)*5+5,00,00,00,00))
+                             datetime(2008,0o1,(i/5)*5+5,00,00,00,00))
   
     def testNextMonth(self):
         """ Test all days of the week get next month """
-        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 01, 31, 23, 
+        self.assertEqual(self.schedule.getNextEntry(datetime(2008, 0o1, 31, 23, 
                                                              59, 00, 00)),
-                         datetime(2008,02,05,00,00,00,00))
+                         datetime(2008,0o2,0o5,00,00,00,00))
 
 class FillingCoverageTestCase(TestCase):
     def test_getFirstDayWithSundayDOW(self):

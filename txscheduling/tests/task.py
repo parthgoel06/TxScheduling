@@ -92,8 +92,8 @@ class CallableTests(TestCase):
         self.sc = TestableScheduledCall(self.clock, f)
         
         def errback(fail):
-            self.assert_(fail.check(TestException),
-                         u'Expecting a TestException failure')
+            self.assertTrue(fail.check(TestException),
+                         'Expecting a TestException failure')
         
         def callback(result):
             self.fail('Callback should not be called')
@@ -110,8 +110,8 @@ class CallableTests(TestCase):
         self.sc = TestableScheduledCall(self.clock, f)
         
         def errback(fail):
-            self.assert_(fail.check(TypeError),
-                         u'Expecting a TypeError failure')
+            self.assertTrue(fail.check(TypeError),
+                         'Expecting a TypeError failure')
         
         def callback(result):
             self.fail('Callback should not be called')
@@ -179,36 +179,36 @@ class SimpleTimingTests(TestCase):
         """ No calls before scheduled delay """
         self.sc.start(SimpleSchedule(1))
         self.assertEqual(self.callable.count, 0,
-                         u'Callable should not be called before time has passed')
+                         'Callable should not be called before time has passed')
         self.clock.pump([0.9])
         self.assertEqual(self.callable.count, 0,
-                         u'Callable should not be called before sufficient time '
+                         'Callable should not be called before sufficient time '
                          'has passed')
         self.sc.stop()
         self.assertEqual(self.callable.count, 0,
-                         u'Callable should not be called after stopping')
+                         'Callable should not be called after stopping')
         self.clock.pump([0.1]*50)
         self.assertEqual(self.callable.count, 0,
-                         u'Callable should not be called after stopping')
+                         'Callable should not be called after stopping')
     
     def test_calls(self):
         """ Verify calls at proper times """
         self.sc.start(SimpleSchedule(1))
         self.assertEqual(self.callable.count, 0,
-                         u'Callable should not be called before time has passed')
+                         'Callable should not be called before time has passed')
         self.clock.pump([0.1]*11)
         self.assertEqual(self.callable.count, 1,
-                         u'Callable should be called once now')
+                         'Callable should be called once now')
         
         self.clock.pump([0.1]*10)
         self.assertEqual(self.callable.count, 2,
-                         u'Callable should be called twice now')
+                         'Callable should be called twice now')
         self.sc.stop()
         self.assertEqual(self.callable.count, 2,
-                         u'Callable should not be called after stopping')
+                         'Callable should not be called after stopping')
         self.clock.pump([0.1]*50)
         self.assertEqual(self.callable.count, 2,
-                         u'Callable should not be called after stopping')
+                         'Callable should not be called after stopping')
         
 
 class LongRunningTimingTests(TestCase):
@@ -227,86 +227,86 @@ class LongRunningTimingTests(TestCase):
         """ No calls before scheduled delay on long running task """
         self.sc.start(SimpleSchedule(1))
         self.assertEqual(self.callable.count, 0,
-                         u'Callable should not be called before time has passed')
+                         'Callable should not be called before time has passed')
         self.assertEqual(self.started.count, 0,
-                         u'Callable should not be called before time has passed')
+                         'Callable should not be called before time has passed')
         
         self.clock.pump([0.9])
         self.assertEqual(self.callable.count, 0,
-                         u'Callable should not be called before sufficient time '
+                         'Callable should not be called before sufficient time '
                          'has passed')
         self.assertEqual(self.started.count, 0,
-                         u'Callable should not be called before sufficient time '
+                         'Callable should not be called before sufficient time '
                          'has passed')
         self.sc.stop()
         self.assertEqual(self.callable.count, 0,
-                         u'Callable should not be called after stopping')
+                         'Callable should not be called after stopping')
         self.assertEqual(self.started.count, 0,
-                         u'Callable should not be called after stopping')
+                         'Callable should not be called after stopping')
         
         self.clock.pump([0.1]*50)
         self.assertEqual(self.callable.count, 0,
-                         u'Callable should not be called after stopping')
+                         'Callable should not be called after stopping')
         self.assertEqual(self.started.count, 0,
-                         u'Callable should not be called after stopping')
+                         'Callable should not be called after stopping')
         
     
     def test_calls(self):
         """ Verify calls at proper times on long running task """
         self.sc.start(SimpleSchedule(2))
         self.assertEqual(self.callable.count, 0,
-                         u'Callable should not be called before time has passed')
+                         'Callable should not be called before time has passed')
         self.assertEqual(self.started.count, 0,
-                         u'Callable should not be called before time has passed')
+                         'Callable should not be called before time has passed')
         
         # Time will be approx. 2.1
         self.clock.pump([0.1]*21)
         self.assertEqual(self.callable.count, 0,
-                         u'Callable should be running now: %f' % (self.clock.rightNow,))
+                         'Callable should be running now: %f' % (self.clock.rightNow,))
         self.assertEqual(self.started.count, 1,
-                         u'Callable should be running now: %f' % (self.clock.rightNow,))
+                         'Callable should be running now: %f' % (self.clock.rightNow,))
         
         # Time will be approx. 3.2
         self.clock.pump([0.1]*11)
         self.assertEqual(self.callable.count, 1,
-                         u'Callable should be called once now: %f' % (self.clock.rightNow,))
+                         'Callable should be called once now: %f' % (self.clock.rightNow,))
         self.assertEqual(self.started.count, 1,
-                         u'Callable should be called once now: %f' % (self.clock.rightNow,))
+                         'Callable should be called once now: %f' % (self.clock.rightNow,))
         
         # Time will be approx. 3.9
         self.clock.pump([0.1]*7)
         self.assertEqual(self.callable.count, 1,
-                         u'Callable should be called once now: %f' % (self.clock.rightNow,))
+                         'Callable should be called once now: %f' % (self.clock.rightNow,))
         self.assertEqual(self.started.count, 1,
-                         u'Callable should be called once now: %f' % (self.clock.rightNow,))
+                         'Callable should be called once now: %f' % (self.clock.rightNow,))
         
         # Time will be approx 5.2
         self.clock.pump([0.1]*13)
         self.assertEqual(self.callable.count, 1,
-                         u'Callable should be running now: %f' % (self.clock.rightNow,))
+                         'Callable should be running now: %f' % (self.clock.rightNow,))
         self.assertEqual(self.started.count, 2,
-                         u'Callable should be running now: %f' % (self.clock.rightNow,))
+                         'Callable should be running now: %f' % (self.clock.rightNow,))
         
         # Time will be approx. 6.4
         self.clock.pump([0.1]*12)
         self.assertEqual(self.callable.count, 2,
-                         u'Callable should be called twice now: %f' % (self.clock.rightNow,))
+                         'Callable should be called twice now: %f' % (self.clock.rightNow,))
         self.assertEqual(self.started.count, 2,
-                         u'Callable should be called twice now: %f' % (self.clock.rightNow,))
+                         'Callable should be called twice now: %f' % (self.clock.rightNow,))
         
         
         self.sc.stop()
         self.assertEqual(self.callable.count, 2,
-                         u'Callable should not be called after stopping: %f' % (self.clock.rightNow,))
+                         'Callable should not be called after stopping: %f' % (self.clock.rightNow,))
         self.assertEqual(self.started.count, 2,
-                         u'Callable should not be called after stopping: %f' % (self.clock.rightNow,))
+                         'Callable should not be called after stopping: %f' % (self.clock.rightNow,))
         
         
         self.clock.pump([0.1]*50)
         self.assertEqual(self.callable.count, 2,
-                         u'Callable should not be called after stopping: %f' % (self.clock.rightNow,))
+                         'Callable should not be called after stopping: %f' % (self.clock.rightNow,))
         self.assertEqual(self.started.count, 2,
-                         u'Callable should not be called after stopping: %f' % (self.clock.rightNow,))
+                         'Callable should not be called after stopping: %f' % (self.clock.rightNow,))
 
 def test_suite():
     suite = unittest.TestSuite()

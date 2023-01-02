@@ -295,7 +295,7 @@ def parseCronLine(line):
     if not line:
         raise InvalidCronLine('Empty cron line provided')
     
-    if not isinstance(line, basestring):
+    if not isinstance(line, str):
         raise InvalidCronLine('Cron line must be a string')
     
     line = re.split('\s+',line.strip())
@@ -449,7 +449,7 @@ def parseCronEntry(entry,min,max):
     if not entry:
         raise InvalidCronEntry('Empty cron entry')
     
-    if not isinstance(entry, basestring):
+    if not isinstance(entry, str):
         raise InvalidCronEntry('Cron entry must be a string')
     
     try:
@@ -523,7 +523,7 @@ def parseCronEntry(entry,min,max):
             if begin == end and begin % step != 0:
                 raise InvalidCronEntry('Invalid range or step specified: %s' % (e))
           
-            total.update(range(begin,end,step))
+            total.update(list(range(begin,end,step)))
         elif not begin is None:
             raise InvalidCronEntry('Invalid range or step specified: %s' % (e))
       
