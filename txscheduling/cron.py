@@ -2,7 +2,7 @@ import time
 import datetime
 import re
 
-import zope.interface
+from zope.interface import implementer
 
 from txscheduling.interfaces import ISchedule
 
@@ -12,9 +12,9 @@ from txscheduling.interfaces import ISchedule
 txscheduling.interface.ISchedule interface along with two useful 
 functions for parsing cron lines. """
 
+
+@implementer(ISchedule)
 class CronSchedule(object):
-    zope.interface.implements(ISchedule)
-    
     _minutes = None
     _hours = None
     _doms = None # days of the month
