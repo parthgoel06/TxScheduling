@@ -1,7 +1,8 @@
 from setuptools import setup, find_packages
 import sys, os
+import __version__
 
-version = '1.1'
+version = __version__.__version__
 
 setup(name='TxScheduling',
       version=version,
